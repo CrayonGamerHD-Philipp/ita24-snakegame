@@ -2,7 +2,7 @@ import random
 import pygame
 
 from figures.figure import Figure
-from config import screen_width, screen_height, grid_size, grid_height, grid_width
+from config import grid_size, grid_height, grid_width
 
 class Food(Figure):
     def __init__(self, color):
