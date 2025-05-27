@@ -3,10 +3,11 @@ import sys
 
 from figures.snake import Snake
 from figures.food import Food, SpecialFood
+from screens.startscreen import start_screen
 
-grid_size = 20
-grid_width = 18
-grid_height = 18
+grid_size = 25
+grid_width = 32
+grid_height = 20
 
 screen_width = grid_size * grid_width
 screen_height = grid_size * grid_height
@@ -17,10 +18,10 @@ def draw_grid(surface):
         for x in range(0, int(grid_width)):
             if (x + y) % 2 == 0:
                 r = pygame.Rect((x * grid_size, y * grid_size), (grid_size, grid_size))
-                pygame.draw.rect(surface, (93, 216, 228), r)
+                pygame.draw.rect(surface, (170, 255, 213) , r)
             else:
                 rr = pygame.Rect((x * grid_size, y * grid_size), (grid_size, grid_size))
-                pygame.draw.rect(surface, (84, 194, 205), rr)
+                pygame.draw.rect(surface, (107, 148, 107), rr)
 
 
 def handle_events():
@@ -67,6 +68,8 @@ def main():
 
     food = Food(color=(255, 0, 0))
     special_food = SpecialFood(color=(0, 0, 255))
+
+    start_screen(screen=screen, surface=surface)
 
     while (True):
         clock.tick(5)
