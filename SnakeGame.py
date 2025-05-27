@@ -3,7 +3,8 @@ import sys
 
 from figures.snake import Snake
 from figures.food import Food, SpecialFood
-from config import screen_width, screen_height, grid_size, grid_width, grid_height
+from screens.startscreen import start_screen
+from config import screen_width, screen_height, grid_height, grid_size, grid_width
 
 
 class SnakeGame():
