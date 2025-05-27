@@ -39,6 +39,7 @@ class SnakeGame():
             self.__food.randomize_position()
 
     def run(self):
+        start_screen(self.__screen, self.__surface)
         while self.__running:
             self.handle_events()
             self.update()
@@ -63,10 +64,10 @@ class SnakeGame():
             for x in range(0, int(grid_width)):
                 if (x + y) % 2 == 0:
                     r = pygame.Rect((x * grid_size, y * grid_size), (grid_size, grid_size))
-                    pygame.draw.rect(self.__surface, (93, 216, 228), r)
+                    pygame.draw.rect(self.__surface, (170, 255, 213), r)
                 else:
                     rr = pygame.Rect((x * grid_size, y * grid_size), (grid_size, grid_size))
-                    pygame.draw.rect(self.__surface, (84, 194, 205), rr)
+                    pygame.draw.rect(self.__surface, (107, 148, 107), rr)
 
     def handle_events(self):
         for event in pygame.event.get():
