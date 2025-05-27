@@ -1,5 +1,7 @@
+import pygame
+
 from figure import Figure
-from SnakeGame import screen_width, screen_height, grid_size
+from config import screen_width, screen_height, grid_size
 
 class Snake(Figure):
 

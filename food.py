@@ -2,7 +2,7 @@ import random
 import pygame
 
 from figure import Figure
-from SnakeGame import screen_width, screen_height, grid_size, grid_width, grid_height
+from config import screen_width, screen_height, grid_size, grid_height, grid_width
 
 class Food(Figure):
     def __init__(self, color):

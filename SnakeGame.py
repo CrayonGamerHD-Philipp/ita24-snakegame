@@ -4,13 +4,7 @@ import sys
 
 from snake import Snake
 from food import Food, SpecialFood
-
-grid_size = 20
-grid_width = 18
-grid_height = 18
-
-screen_width = grid_size * grid_width
-screen_height = grid_size * grid_height
+from config import screen_width, screen_height, grid_size, grid_width, grid_height
 
 
 def draw_grid(surface):
@@ -95,7 +89,6 @@ def main():
         special_food.draw(surface)
         handle_events()
         screen.blit(surface, (0, 0))
-        print(snake.get_score())
         text = myfont.render(f"Score: {snake.get_score()}", bool(1), (0, 0, 0))
         screen.blit(text, (5, 10))
         pygame.display.update()
