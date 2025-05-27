@@ -6,91 +6,85 @@ from figures.food import Food, SpecialFood
 from config import screen_width, screen_height, grid_size, grid_width, grid_height
 
 
-def draw_grid(surface):
-    for y in range(0, int(grid_height)):
-        for x in range(0, int(grid_width)):
-            if (x + y) % 2 == 0:
-                r = pygame.Rect((x * grid_size, y * grid_size), (grid_size, grid_size))
-                pygame.draw.rect(surface, (93, 216, 228), r)
-            else:
-                rr = pygame.Rect((x * grid_size, y * grid_size), (grid_size, grid_size))
-                pygame.draw.rect(surface, (84, 194, 205), rr)
+class SnakeGame():
 
+    def __init__(self):
+        pygame.init()
+        self.__clock = pygame.time.Clock()
+        self.__screen = pygame.display.set_mode((screen_width, screen_height), 0, 32)
+        self.__surface = pygame.Surface(self.__screen.get_size()).convert()
+        self.__font = pygame.font.SysFont("monospace", 16)
+        self.__snake = Snake(color=(0, 200, 0))
+        self.__food = Food(color=(255, 0, 0))
+        self.__special_food = SpecialFood(color=(0, 0, 255))
+        self.__running = True
 
-def handle_events():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                pygame.quit()
-                sys.exit()
+    def update(self):
+        self.__clock.tick(5)
+        self.__snake.move()
+        self.__special_food.increase_counter()
+        self.__special_food.check_counter()
 
+        if self.__snake.get_head_position() == self.__special_food.get_position():
+            self.__special_food.randomize_position()
+            self.__special_food.reset_counter()
+            self.__snake.increase_length()
+            self.__snake.increase_score()
+            self.__snake.increase_score()
 
-def handle_keys(snake):
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                pygame.quit()
-                sys.exit()
-            if event.key == pygame.K_UP:
-                snake.turn((0, -1))
-            elif event.key == pygame.K_DOWN:
-                snake.turn((0, 1))
-            elif event.key == pygame.K_LEFT:
-                snake.turn((-1, 0))
-            elif event.key == pygame.K_RIGHT:
-                snake.turn((1, 0))
+        if self.__snake.get_head_position() == self.__food.get_position():
+            self.__snake.increase_score()
+            self.__snake.increase_length()
+            self.__food.randomize_position()
 
+    def run(self):
+        while self.__running:
+            self.handle_events()
+            self.update()
+            self.draw()
+        pygame.quit()
+        sys.exit()
 
-def main():
-    pygame.init()
+    def draw(self):
+        self.draw_grid()
+        self.__snake.draw(self.__surface)
+        self.__food.draw(self.__surface)
+        self.__special_food.draw(self.__surface)
 
-    clock = pygame.time.Clock()
-    screen = pygame.display.set_mode((screen_width, screen_height), 0, 32)
+        text = self.__font.render(f"Score: {self.__snake.get_score()}", True, (0, 0, 0))
+        self.__surface.blit(text, (5, 10))
 
-    surface = pygame.Surface(screen.get_size())
-    surface = surface.convert()
-
-    myfont = pygame.font.SysFont("monospace", 16)
-    snake = Snake(color=(0, 200, 0))
-
-    food = Food(color=(255, 0, 0))
-    special_food = SpecialFood(color=(0, 0, 255))
-
-    while (True):
-        clock.tick(5)
-        handle_keys(snake)
-        snake.move()
-
-        special_food.increase_counter()
-        special_food.check_counter()
-
-        if snake.get_head_position() == special_food.get_position():
-            special_food.randomize_position()
-            special_food.reset_counter()
-            snake.increase_length()
-            snake.increase_score()
-            snake.increase_score()
-
-        if snake.get_head_position() == food.get_position():
-            snake.increase_score()
-            snake.increase_length()
-            food.randomize_position()
-
-        draw_grid(surface)
-        snake.draw(surface)
-        food.draw(surface)
-        special_food.draw(surface)
-        handle_events()
-        screen.blit(surface, (0, 0))
-        text = myfont.render(f"Score: {snake.get_score()}", bool(1), (0, 0, 0))
-        screen.blit(text, (5, 10))
+        self.__screen.blit(self.__surface, (0, 0))
         pygame.display.update()
 
+    def draw_grid(self):
+        for y in range(0, int(grid_height)):
+            for x in range(0, int(grid_width)):
+                if (x + y) % 2 == 0:
+                    r = pygame.Rect((x * grid_size, y * grid_size), (grid_size, grid_size))
+                    pygame.draw.rect(self.__surface, (93, 216, 228), r)
+                else:
+                    rr = pygame.Rect((x * grid_size, y * grid_size), (grid_size, grid_size))
+                    pygame.draw.rect(self.__surface, (84, 194, 205), rr)
 
-main()
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    pygame.quit()
+                    sys.exit()
+                elif event.key == pygame.K_UP:
+                    self.__snake.turn((0, -1))
+                elif event.key == pygame.K_DOWN:
+                    self.__snake.turn((0, 1))
+                elif event.key == pygame.K_LEFT:
+                    self.__snake.turn((-1, 0))
+                elif event.key == pygame.K_RIGHT:
+                    self.__snake.turn((1, 0))
+
+if __name__ == "__main__":
+    snake_game = SnakeGame()
+    snake_game.run()
