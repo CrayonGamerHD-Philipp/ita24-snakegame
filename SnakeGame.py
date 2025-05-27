@@ -4,13 +4,7 @@ import sys
 from figures.snake import Snake
 from figures.food import Food, SpecialFood
 from screens.startscreen import start_screen
-
-grid_size = 25
-grid_width = 32
-grid_height = 20
-
-screen_width = grid_size * grid_width
-screen_height = grid_size * grid_height
+from config import screen_width, screen_height, grid_height, grid_size, grid_width
 
 
 def draw_grid(surface):
