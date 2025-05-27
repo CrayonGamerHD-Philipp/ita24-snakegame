@@ -5,6 +5,7 @@ from figures.snake import Snake
 from figures.food import Food, SpecialFood
 from screens.startscreen import start_screen
 from config import screen_width, screen_height, grid_height, grid_size, grid_width
+from effekte.effekte import background_music, eat_sound, game_over_sound
 
 
 class SnakeGame():
@@ -37,9 +38,11 @@ class SnakeGame():
             self.__snake.increase_score()
             self.__snake.increase_length()
             self.__food.randomize_position()
+            eat_sound.play()
 
     def run(self):
         start_screen(self.__screen, self.__surface)
+        background_music.play(-1)  # Musik startet jetzt nach Start-Klick und läuft in Endlosschleife
         while self.__running:
             self.handle_events()
             self.update()
