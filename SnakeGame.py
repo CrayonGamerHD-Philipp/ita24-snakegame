@@ -5,48 +5,16 @@ from figures.snake import Snake
 from figures.food import Food, SpecialFood
 from screens.startscreen import start_screen
 from config import screen_width, screen_height, grid_height, grid_size, grid_width
-
+from pause_menu.pause_menu import pause_screen
 
 def draw_grid(surface):
     for y in range(0, int(grid_height)):
         for x in range(0, int(grid_width)):
+            rect = pygame.Rect((x * grid_size, y * grid_size), (grid_size, grid_size))
             if (x + y) % 2 == 0:
-                r = pygame.Rect((x * grid_size, y * grid_size), (grid_size, grid_size))
-                pygame.draw.rect(surface, (170, 255, 213) , r)
+                pygame.draw.rect(surface, (170, 255, 213), rect)
             else:
-                rr = pygame.Rect((x * grid_size, y * grid_size), (grid_size, grid_size))
-                pygame.draw.rect(surface, (107, 148, 107), rr)
-
-
-def handle_events():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                pygame.quit()
-                sys.exit()
-
-
-def handle_keys(snake):
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                pygame.quit()
-                sys.exit()
-            if event.key == pygame.K_UP:
-                snake.turn((0, -1))
-            elif event.key == pygame.K_DOWN:
-                snake.turn((0, 1))
-            elif event.key == pygame.K_LEFT:
-                snake.turn((-1, 0))
-            elif event.key == pygame.K_RIGHT:
-                snake.turn((1, 0))
-
+                pygame.draw.rect(surface, (107, 148, 107), rect)
 
 def main():
     pygame.init()
@@ -65,9 +33,30 @@ def main():
 
     start_screen(screen=screen, surface=surface)
 
-    while (True):
+    while True:
         clock.tick(5)
-        handle_keys(snake)
+
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    pygame.quit()
+                    sys.exit()
+                elif event.key == pygame.K_p:
+                    pause_screen(screen, surface)
+                elif event.key == pygame.K_UP:
+                    snake.turn((0, -1))
+                elif event.key == pygame.K_DOWN:
+                    snake.turn((0, 1))
+                elif event.key == pygame.K_LEFT:
+                    snake.turn((-1, 0))
+                elif event.key == pygame.K_RIGHT:
+                    snake.turn((1, 0))
+
+
         snake.move()
 
         special_food.increase_counter()
@@ -85,16 +74,15 @@ def main():
             snake.increase_length()
             food.randomize_position()
 
+
         draw_grid(surface)
         snake.draw(surface)
         food.draw(surface)
         special_food.draw(surface)
-        handle_events()
+
         screen.blit(surface, (0, 0))
-        print(snake.get_score())
-        text = myfont.render(f"Score: {snake.get_score()}", bool(1), (0, 0, 0))
+        text = myfont.render(f"Score: {snake.get_score()}", True, (0, 0, 0))
         screen.blit(text, (5, 10))
         pygame.display.update()
-
 
 main()
