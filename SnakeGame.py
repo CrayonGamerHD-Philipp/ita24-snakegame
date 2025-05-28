@@ -7,7 +7,7 @@ from screens.startscreen import start_screen
 from config import screen_width, screen_height, grid_height, grid_size, grid_width
 from effekte.effekte import background_music, eat_sound, game_over_sound
 from gameover_screen.gameover_screen import game_over_screen
-
+from pause_menu.pause_menu import pause_screen
 
 class SnakeGame():
 
@@ -103,6 +103,8 @@ class SnakeGame():
                     self.__snake.turn((-1, 0))
                 elif event.key == pygame.K_RIGHT:
                     self.__snake.turn((1, 0))
+                elif event.key == pygame.K_p:
+                    pause_screen(self.__screen, self.__surface)
 
 if __name__ == "__main__":
     snake_game = SnakeGame()
