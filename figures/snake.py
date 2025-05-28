@@ -45,6 +45,11 @@ class Snake(Figure):
     def get_head_position(self):
         return self.__positions[0]
 
+    def check_collision(self):
+        head = self.positions[0]
+        # Prüfe, ob der Kopf an einer anderen Stelle im Körper ist
+        return head in self.positions[1:]
+
     def reset(self):
         self.__length = 1
         self.__positions = [((screen_width / 2), (screen_height / 2))]

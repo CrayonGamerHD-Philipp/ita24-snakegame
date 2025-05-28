@@ -6,6 +6,7 @@ from figures.food import Food, SpecialFood
 from screens.startscreen import start_screen
 from config import screen_width, screen_height, grid_height, grid_size, grid_width
 from pause_menu.pause_menu import pause_screen
+from gameover_screen.gameover_screen import game_over_screen
 
 def draw_grid(surface):
     for y in range(0, int(grid_height)):
@@ -15,6 +16,7 @@ def draw_grid(surface):
                 pygame.draw.rect(surface, (170, 255, 213), rect)
             else:
                 pygame.draw.rect(surface, (107, 148, 107), rect)
+
 
 def main():
     pygame.init()
@@ -36,7 +38,6 @@ def main():
     while True:
         clock.tick(5)
 
-        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -56,8 +57,14 @@ def main():
                 elif event.key == pygame.K_RIGHT:
                     snake.turn((1, 0))
 
-
         snake.move()
+
+
+        if snake.check_collision():
+            game_over_screen(screen, surface)
+            snake.reset()
+            food.randomize_position()
+            special_food.randomize_position()
 
         special_food.increase_counter()
         special_food.check_counter()
@@ -74,7 +81,6 @@ def main():
             snake.increase_length()
             food.randomize_position()
 
-
         draw_grid(surface)
         snake.draw(surface)
         food.draw(surface)
@@ -84,5 +90,6 @@ def main():
         text = myfont.render(f"Score: {snake.get_score()}", True, (0, 0, 0))
         screen.blit(text, (5, 10))
         pygame.display.update()
+
 
 main()
