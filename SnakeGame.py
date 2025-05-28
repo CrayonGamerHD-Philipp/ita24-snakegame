@@ -22,12 +22,19 @@ class SnakeGame():
         self.__special_food = SpecialFood(color=(0, 0, 255))
         self.__running = True
 
+    def reset(self):
+        self.__snake = Snake(color=(0, 200, 0))
+        self.__food = Food(color=(255, 0, 0))
+        self.__special_food = SpecialFood(color=(0, 0, 255))
+        self.__running = True
+        background_music.play(-1)
+
     def update(self):
         if self.__snake.is_dead():
             game_over_sound.play()
             background_music.stop()
             game_over_screen(self.__screen, self.__surface)
-            self.__running = False
+            self.reset()
             return
 
         self.__clock.tick(5)
@@ -50,14 +57,12 @@ class SnakeGame():
 
     def run(self):
         start_screen(self.__screen, self.__surface)
-        background_music.play(-1)  # Musik startet jetzt nach Start-Klick und läuft in Endlosschleife
-        screen = pygame.display.get_surface()
-        while self.__running:
+        background_music.play(-1)
+        while True:
             self.handle_events()
-            self.update()
-            self.draw()
-        pygame.quit()
-        sys.exit()
+            if self.__running:
+                self.update()
+                self.draw()
 
     def draw(self):
         self.draw_grid()
