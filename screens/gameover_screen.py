@@ -1,5 +1,5 @@
 import pygame
-from config import screen_width, RED
+from config import screen_width, RED, DARK_GRAY
 
 
 def game_over_screen(screen, surface):
