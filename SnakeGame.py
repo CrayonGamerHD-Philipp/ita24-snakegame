@@ -8,6 +8,7 @@ from config import screen_width, screen_height, grid_height, grid_size, grid_wid
 from effekte.effekte import background_music, eat_sound, game_over_sound
 from gameover_screen.gameover_screen import game_over_screen
 from pause_menu.pause_menu import pause_screen
+from effekte.snake_eyes import draw_eyes
 
 class SnakeGame():
 
@@ -69,6 +70,8 @@ class SnakeGame():
         self.__snake.draw(self.__surface)
         self.__food.draw(self.__surface)
         self.__special_food.draw(self.__surface)
+
+        draw_eyes(self.__surface, self.__snake)
 
         text = self.__font.render(f"Score: {self.__snake.get_score()}", True, (0, 0, 0))
         self.__surface.blit(text, (5, 10))

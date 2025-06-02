@@ -83,3 +83,6 @@ class Snake(Figure):
 
     def is_dead(self):
         return self.__is_dead
+
+    def get_direction(self):
+        return self.__direction
