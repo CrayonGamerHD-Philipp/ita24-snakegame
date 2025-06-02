@@ -6,7 +6,7 @@ from figures.food import Food, SpecialFood
 from screens.startscreen import start_screen
 from config import screen_width, screen_height, grid_height, grid_size, grid_width
 from effekte.effekte import background_music, eat_sound, game_over_sound
-from gameover_screen.gameover_screen import game_over_screen
+from screens.gameover_screen import game_over_screen
 
 
 class SnakeGame():
