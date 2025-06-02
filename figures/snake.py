@@ -17,6 +17,8 @@ class Snake(Figure):
 
         self.__score = 0
 
+        self.__is_dead = False
+
     def draw(self, surface):
 
         for p in self.__positions:
@@ -37,6 +39,7 @@ class Snake(Figure):
             ((cur_head_pos[0] + (x * grid_size)) % screen_width), (cur_head_pos[1] + (y * grid_size)) % screen_height)
         if len(self.__positions) > 2 and new_head_pos in self.__positions[2:]:
             self.reset()
+            self.__is_dead = True
         else:
             self.__positions.insert(0, new_head_pos)
             if len(self.__positions) > self.__length:
@@ -50,6 +53,7 @@ class Snake(Figure):
         self.__positions = [((screen_width / 2), (screen_height / 2))]
         self.__direction = (1, 0)
         self.__score = 0
+        self.__is_dead = False
 
     def get_score(self):
         return self.__score
@@ -76,3 +80,6 @@ class Snake(Figure):
 
     def reset_length(self):
         self.__length = 0
+
+    def is_dead(self):
+        return self.__is_dead
