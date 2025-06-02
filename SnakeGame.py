@@ -6,8 +6,9 @@ from figures.food import Food, SpecialFood
 from screens.startscreen import start_screen
 from config import screen_width, screen_height, grid_height, grid_size, grid_width
 from effekte.effekte import background_music, eat_sound, game_over_sound
+from pause_menu.pause_menu import pause_screen
+from effekte.snake_eyes import draw_eyes
 from screens.gameover_screen import game_over_screen
-
 
 class SnakeGame():
 
@@ -22,12 +23,19 @@ class SnakeGame():
         self.__special_food = SpecialFood(color=(0, 0, 255))
         self.__running = True
 
+    def reset(self):
+        self.__snake = Snake(color=(0, 200, 0))
+        self.__food = Food(color=(255, 0, 0))
+        self.__special_food = SpecialFood(color=(0, 0, 255))
+        self.__running = True
+        background_music.play(-1)
+
     def update(self):
         if self.__snake.is_dead():
             game_over_sound.play()
             background_music.stop()
             game_over_screen(self.__screen, self.__surface)
-            self.__running = False
+            self.reset()
             return
 
         self.__clock.tick(5)
@@ -50,20 +58,20 @@ class SnakeGame():
 
     def run(self):
         start_screen(self.__screen, self.__surface)
-        background_music.play(-1)  # Musik startet jetzt nach Start-Klick und läuft in Endlosschleife
-        screen = pygame.display.get_surface()
-        while self.__running:
+        background_music.play(-1)
+        while True:
             self.handle_events()
-            self.update()
-            self.draw()
-        pygame.quit()
-        sys.exit()
+            if self.__running:
+                self.update()
+                self.draw()
 
     def draw(self):
         self.draw_grid()
         self.__snake.draw(self.__surface)
         self.__food.draw(self.__surface)
         self.__special_food.draw(self.__surface)
+
+        draw_eyes(self.__surface, self.__snake)
 
         text = self.__font.render(f"Score: {self.__snake.get_score()}", True, (0, 0, 0))
         self.__surface.blit(text, (5, 10))
@@ -98,6 +106,8 @@ class SnakeGame():
                     self.__snake.turn((-1, 0))
                 elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                     self.__snake.turn((1, 0))
+                elif event.key == pygame.K_p:
+                    pause_screen(self.__screen, self.__surface)
 
 if __name__ == "__main__":
     snake_game = SnakeGame()
