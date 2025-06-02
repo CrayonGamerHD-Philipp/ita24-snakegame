@@ -1,17 +1,5 @@
 import pygame
-from config import screen_width
-
-WHITE = (255, 255, 255)
-DARK_GRAY = (40, 40, 40)
-GREEN = (17, 24, 47)
-BLUE = (93, 216, 228)
-RED = (139, 0, 0)
-EYE_COLOR = (255, 255, 255)
-BLACK = (0, 0, 0)
-YELLOW = (255, 255, 0)
-
-
-
+from config import screen_width, RED, DARK_GRAY
 
 
 def game_over_screen(screen, surface):

@@ -6,9 +6,9 @@ from figures.food import Food, SpecialFood
 from screens.startscreen import start_screen
 from config import screen_width, screen_height, grid_height, grid_size, grid_width
 from effekte.effekte import background_music, eat_sound, game_over_sound
-from gameover_screen.gameover_screen import game_over_screen
 from pause_menu.pause_menu import pause_screen
 from effekte.snake_eyes import draw_eyes
+from screens.gameover_screen import game_over_screen
 
 class SnakeGame():
 
@@ -98,13 +98,13 @@ class SnakeGame():
                 if event.key == pygame.K_q:
                     pygame.quit()
                     sys.exit()
-                elif event.key == pygame.K_UP:
+                elif event.key == pygame.K_UP or event.key == pygame.K_w:
                     self.__snake.turn((0, -1))
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                     self.__snake.turn((0, 1))
-                elif event.key == pygame.K_LEFT:
+                elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     self.__snake.turn((-1, 0))
-                elif event.key == pygame.K_RIGHT:
+                elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                     self.__snake.turn((1, 0))
                 elif event.key == pygame.K_p:
                     pause_screen(self.__screen, self.__surface)
