@@ -90,13 +90,13 @@ class SnakeGame():
                 if event.key == pygame.K_q:
                     pygame.quit()
                     sys.exit()
-                elif event.key == pygame.K_UP:
+                elif event.key == pygame.K_UP or event.key == pygame.K_w:
                     self.__snake.turn((0, -1))
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                     self.__snake.turn((0, 1))
-                elif event.key == pygame.K_LEFT:
+                elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     self.__snake.turn((-1, 0))
-                elif event.key == pygame.K_RIGHT:
+                elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                     self.__snake.turn((1, 0))
 
 if __name__ == "__main__":
