@@ -85,7 +85,7 @@ class SnakeGame():
 
         draw_eyes(self.__surface, self.__snake)
 
-        text = self.__font.render(f"Score: {self.__snake.get_score()} Highscore: {self.__highscore}", True, (0, 0, 0))
+        text = self.__font.render(f"Score: {self.__snake.get_score()} Highscore: {self.__highscore} Gamespeed: {self.__gamespeed}", True, (0, 0, 0))
         self.__surface.blit(text, (5, 10))
 
         self.__screen.blit(self.__surface, (0, 0))
