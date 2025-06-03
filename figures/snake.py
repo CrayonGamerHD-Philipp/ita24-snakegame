@@ -38,7 +38,6 @@ class Snake(Figure):
         new_head_pos = (
             ((cur_head_pos[0] + (x * grid_size)) % screen_width), (cur_head_pos[1] + (y * grid_size)) % screen_height)
         if len(self.__positions) > 2 and new_head_pos in self.__positions[2:]:
-            self.reset()
             self.__is_dead = True
         else:
             self.__positions.insert(0, new_head_pos)

@@ -1,5 +1,7 @@
 import pygame
 import sys
+import json
+import os
 
 from figures.snake import Snake
 from figures.food import Food, SpecialFood
@@ -23,13 +25,21 @@ class SnakeGame():
         self.__special_food = SpecialFood(color=(0, 0, 255))
         self.__running = True
         self.__gamespeed = 5
+        self.__highscore = 0
+        self.load_data()
+        
+
 
     def reset(self):
+        if self.__snake.get_score() > self.__highscore:
+            self.__highscore = self.__snake.get_score()
         self.__snake = Snake(color=(0, 200, 0))
         self.__food = Food(color=(255, 0, 0))
         self.__special_food = SpecialFood(color=(0, 0, 255))
         self.__running = True
         background_music.play(-1)
+
+        self.save_data()
 
     def update(self):
         if self.__snake.is_dead():
@@ -75,7 +85,7 @@ class SnakeGame():
 
         draw_eyes(self.__surface, self.__snake)
 
-        text = self.__font.render(f"Score: {self.__snake.get_score()}", True, (0, 0, 0))
+        text = self.__font.render(f"Score: {self.__snake.get_score()} Highscore: {self.__highscore}", True, (0, 0, 0))
         self.__surface.blit(text, (5, 10))
 
         self.__screen.blit(self.__surface, (0, 0))
@@ -110,6 +120,17 @@ class SnakeGame():
                     self.__snake.turn((1, 0))
                 elif event.key == pygame.K_p:
                     pause_screen(self.__screen, self.__surface)
+
+    def load_data(self):
+        if os.path.exists("data.json"):
+            with open("data.json", "r") as file:
+                data = json.load(file)
+                self.__highscore = data.get("highscore", 0)
+        return 0
+
+    def save_data(self):
+        with open("data.json", "w") as file:
+            json.dump({"highscore": self.__highscore}, file, indent=4)
 
 if __name__ == "__main__":
     snake_game = SnakeGame()
