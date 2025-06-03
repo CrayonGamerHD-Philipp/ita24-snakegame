@@ -45,7 +45,7 @@ class SnakeGame():
         if self.__snake.is_dead():
             game_over_sound.play()
             background_music.stop()
-            game_over_screen(self.__screen, self.__surface)
+            game_over_screen(self.__screen, self.__surface, self)
             self.reset()
             return
 
@@ -131,6 +131,10 @@ class SnakeGame():
     def save_data(self):
         with open("data.json", "w") as file:
             json.dump({"highscore": self.__highscore}, file, indent=4)
+
+
+    def get_highscore(self):
+        return self.__highscore
 
 if __name__ == "__main__":
     snake_game = SnakeGame()
