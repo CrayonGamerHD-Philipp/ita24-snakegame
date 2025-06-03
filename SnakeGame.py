@@ -22,6 +22,7 @@ class SnakeGame():
         self.__food = Food(color=(255, 0, 0))
         self.__special_food = SpecialFood(color=(0, 0, 255))
         self.__running = True
+        self.__gamespeed = 5
 
     def reset(self):
         self.__snake = Snake(color=(0, 200, 0))
@@ -38,7 +39,8 @@ class SnakeGame():
             self.reset()
             return
 
-        self.__clock.tick(5)
+        self.__gamespeed = 5 + (self.__snake.get_score() // 10)
+        self.__clock.tick(self.__gamespeed)
         self.__snake.move()
         self.__special_food.increase_counter()
         self.__special_food.check_counter()
