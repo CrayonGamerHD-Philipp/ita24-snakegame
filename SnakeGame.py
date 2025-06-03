@@ -37,7 +37,8 @@ class SnakeGame():
             self.reset()
             return
 
-        self.__clock.tick(5)
+        speed = 5 + (self.__snake.get_score() // 10)
+        self.__clock.tick(speed)
         self.__snake.move()
         self.__special_food.increase_counter()
         self.__special_food.check_counter()
