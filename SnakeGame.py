@@ -132,6 +132,10 @@ class SnakeGame():
         with open("data.json", "w") as file:
             json.dump({"highscore": self.__highscore}, file, indent=4)
 
+
+    def get_highscore(self):
+        return self.__highscore
+
 if __name__ == "__main__":
     snake_game = SnakeGame()
     snake_game.run()
