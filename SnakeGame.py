@@ -45,7 +45,7 @@ class SnakeGame():
         if self.__snake.is_dead():
             game_over_sound.play()
             background_music.stop()
-            game_over_screen(self.__screen, self.__surface, self)
+            game_over_screen(self.__screen, self.__surface)
             self.reset()
             return
 
